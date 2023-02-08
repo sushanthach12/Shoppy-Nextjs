@@ -15,8 +15,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Adding Environment Variables
 
 Add the following variables to .env.local file in the main folder structure.
-MONGO_URI=\n
-NEXT_PUBLIC_HOST=\n
+MONGO_URI=
+NEXT_PUBLIC_HOST=
 AES_SEC=
 JWT_SECRET=
 NODE_ENV=
