@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router'
 import userContext from '../context/User/UserContext'
+import sendRegisterMail from '../lib/registerMail'
 
 const Signup = ({ setKey, setUser }) => {
   const router = useRouter()
@@ -46,6 +47,8 @@ const Signup = ({ setKey, setUser }) => {
       setTimeout(() => {
         router.push("/")
       }, 1000);
+
+      await sendRegisterMail(response.User.name, response.User.email)
 
     } else {
       toast.error('Email already Exists!', {
