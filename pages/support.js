@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import emailjs from '@emailjs/browser'
 import { toast, ToastContainer } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css';
 import HeadTitle from '../components/HeadTitle';
+import sendOrderMail from '../lib/orderMailer';
 import sendSupportMail from '../lib/supportMail';
 
 const Support = () => {
@@ -22,6 +22,7 @@ const Support = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setisLoading(true)
+
         const res = await sendSupportMail(contactForm)
 
         if (res.Success) {
@@ -43,7 +44,7 @@ const Support = () => {
                 theme: "light",
             });
         } else {
-
+            setisLoading(false)
             toast.error('Email invalid!', {
                 position: "bottom-left",
                 autoClose: 1300,
@@ -55,7 +56,12 @@ const Support = () => {
                 theme: "light",
             });
         }
+    }
 
+
+    const handleOrder = async () => {
+        const res = await sendOrderMail()
+        console.log(res);
     }
 
     return (
@@ -152,6 +158,7 @@ const Support = () => {
                                 </button>}
                             </form>
                         </div>
+                        <button type="button" className=" w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-sm leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" onClick={handleOrder}>Order</button>
                     </div>
                 </section>
 

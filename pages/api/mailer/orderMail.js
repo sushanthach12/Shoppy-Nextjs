@@ -1,3 +1,6 @@
+import OrderMail from '../../../components/Mailer/OrderMail';
+const fs = require('fs/promises')
+
 const nodemailer = require('nodemailer')
 
 export default async (req, res) => {
@@ -11,7 +14,7 @@ export default async (req, res) => {
 
 const handler = async (req, res) => {
     try {
-        const { name, email, subject, message } = req.body
+        // const user = await auth(req, res)
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -21,25 +24,14 @@ const handler = async (req, res) => {
             }
         });
 
+        // const TEMPLATE = await fs.readFile('../views/orderMail.html', "utf-8")
         const mailOptions = {
-            to: process.env.NODEMAILER_EMAIL,
-            from: email,
-            subject: subject,
-            html: `
-            <h1> Hi ${name} ! </h1>
-             <br>
-             <h4> Welcome To Shoppy. </h4>
-             <br>
-             <p>${message} </p>
-             
-             For any Queries, Please contact : support@shoppy.com
-             <br>
-             Thanks and Regards
-             <br>
-             Shoppy Team
-             `
+            from: process.env.NODEMAILER_EMAIL,
+            to: 'steamsush12@gmail.com',
+            subject: 'Test Email',
+            html: {path : 'D://Code/Miniproject/ecomm/pages/views/orderMail.html'}
         };
- 
+
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
