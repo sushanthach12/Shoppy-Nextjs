@@ -9,7 +9,7 @@ const UserState = (props) => {
 
     const handleLogin = async (credentials) => {
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/auth/login`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/authenticate/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ const UserState = (props) => {
 
     const handleSignup = async (credentials) => {
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/auth/signup`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/authenticate/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const UserState = (props) => {
 
     const CheckUser = async () => {
         
-        const res = await fetch(`${process.env.REACT_APP_HOST}/api/auth/checkuser`, {
+        const res = await fetch(`${process.env.REACT_APP_HOST}/api/authenticate/checkuser`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -69,7 +69,7 @@ const UserState = (props) => {
 
     const updateUser = async (type, data) => {
         const token = localStorage.getItem('authToken')
-        const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/auth/updateUser`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/authenticate/updateUser`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
