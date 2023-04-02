@@ -44,3 +44,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Preview
 
 ![image](https://user-images.githubusercontent.com/84125038/229338154-56c6ada0-5423-40ac-a8d0-c83e53e863af.png)
+
+
+![image](https://user-images.githubusercontent.com/84125038/229338194-cf381a9b-7e7a-4c18-8e09-d73629c6ca44.png)
+
