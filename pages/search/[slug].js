@@ -66,7 +66,10 @@ export async function getServerSideProps(context) {
         products = await Product.find({ 'gender': slug })
     }
     if (categories.includes(slug)) {
-        products = await Product.find({ 'category': slug })
+        if(slug === "shirts"){
+            products = await Product.find({ 'category': "shirt" })
+        }else
+            products = await Product.find({ 'category': slug })
     }
 
     return {
