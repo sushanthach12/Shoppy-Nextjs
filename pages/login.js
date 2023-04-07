@@ -11,7 +11,7 @@ import { useSession, signIn, signOut, getSession } from 'next-auth/react'
 
 const Login = ({ setKey, setUser, user }) => {
 
-  const { data : session } = useSession()
+  const { data: session } = useSession()
   console.log(session);
 
   const UserContext = useContext(userContext)
@@ -73,7 +73,7 @@ const Login = ({ setKey, setUser, user }) => {
     }
   }
 
-  if( !session ) {
+  if (!session) {
     return (
       <div className='min-h-screen'>
         <Head>
@@ -82,8 +82,8 @@ const Login = ({ setKey, setUser, user }) => {
           <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
           {/* <script src="//code.tidio.co/dhhgkpwkn72wjf4i9afuk8xrgmnq9lpo.js" async></script> */}
         </Head>
-  
-  
+
+
         <section className="bg-white py-10">
           <ToastContainer
             position="bottom-left"
@@ -102,10 +102,10 @@ const Login = ({ setKey, setUser, user }) => {
               <div className="w-full px-4">
                 <div className="relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-gray-50 py-6 px-10 text-center sm:px-12 md:px-[60px]">
                   <div className="mb-6 text-center md:mb-16">
-  
+
                     <a className="text-4xl font-bold text-gray-800 transition-colors duration-300 transform dark:text-orange-300 lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300 tracking-widest" href="#">Shoppy.</a>
                   </div>
-  
+
                   <form onSubmit={handleSubmit}>
                     <div className="mb-6">
                       <input
@@ -178,7 +178,7 @@ const Login = ({ setKey, setUser, user }) => {
                     <li className="w-full px-2">
                       <button
                         className=" ml-2 px-10 border-2 border-opacity-100 flex h-11 items-center justify-center rounded-md bg-slate-50 hover:bg-opacity-90"
-                        onClick={()=> signIn("google", {callbackUrl: process.env.NEXTAUTH_URL})}
+                        onClick={() => signIn("google", { callbackUrl: process.env.NEXTAUTH_URL })}
                       >
                         <Image src={"/google.svg"} width={19} height={19} alt="google"></Image>
                       </button>
@@ -190,7 +190,7 @@ const Login = ({ setKey, setUser, user }) => {
                   >
                     Forget Password?
                   </a>
-  
+
                   <div>
                     <span className="absolute top-1 right-1">
                       <svg
@@ -414,7 +414,7 @@ const Login = ({ setKey, setUser, user }) => {
             </div>
           </div>
         </section>
-  
+
       </div>
     )
   }
@@ -425,10 +425,10 @@ const Login = ({ setKey, setUser, user }) => {
 export default Login
 
 
-export const getServerSideProps = async (context ) => {
+export const getServerSideProps = async (context) => {
   const session = await getSession(context)
 
-  if(session){
+  if (session) {
     return {
       redirect: {
         destination: '/'
@@ -436,6 +436,8 @@ export const getServerSideProps = async (context ) => {
     }
   }
   return {
-    session: null
+    props: {
+      session: null
+    }
   }
 }

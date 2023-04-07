@@ -5,8 +5,13 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { HiOutlineArrowSmRight } from 'react-icons/hi'
 import HeadTitle from '../components/HeadTitle'
+import { getSession, useSession } from 'next-auth/react'
 
-export default function Home({ user }) {
+export default function Home({ user}) {
+  const { data: session } = useSession()
+  
+  console.log(session)
+
   const router = useRouter()
 
   useEffect(() => {
@@ -200,3 +205,14 @@ export default function Home({ user }) {
     </div>
   )
 }
+
+
+// export const getServerSideProps = async (context) => {
+//   const session = await getSession(context)
+
+//   return {
+//     props: {
+//       session
+//     }
+//   }
+// }

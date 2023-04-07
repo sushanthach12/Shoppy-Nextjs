@@ -5,8 +5,10 @@ import cartContext from '../context/cart/CartContext'
 import { useRouter } from 'next/router'
 import LoadingBar from 'react-top-loading-bar'
 import { RiAccountCircleFill } from 'react-icons/ri'
+import { signOut, useSession } from 'next-auth/react'
 
 const Navbar = ({ user, setUser, setKey, showCart, setShowCart, progress, setProgress }) => {
+    const { data: session } = useSession()
     const router = useRouter()
 
     const UserContext = useContext(userContext)
@@ -56,9 +58,10 @@ const Navbar = ({ user, setUser, setKey, showCart, setShowCart, progress, setPro
 
 
     const Logout = async () => {
-        localStorage.removeItem('authToken')
+        // localStorage.removeItem('authToken')
         setUser({ loggedIn: false, value: "", isAdmin: false })
-        router.push('/')
+        signOut()
+        // router.push('/')
     }
 
     const handleRemoveCart = (slug) => {
@@ -106,9 +109,9 @@ const Navbar = ({ user, setUser, setKey, showCart, setShowCart, progress, setPro
                         <div className="absolute inset-x-0 z-20 w-full px-6 py-2 transition-all duration-300 ease-in-out bg-white top-24 dark:bg-gray-800 md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center">
 
                             <div className="flex flex-col md:flex-row md:mx-1 justify-center items-center px-3">
-                                {!localStorage.getItem('authToken') && <Link href="/login"><button type="button" className="text-white border border-gray-400 bg-gray-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center mx-3 md:mr-0 dark:bg-gray-500 dark:hover:border-blue-700 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button></Link>}
+                                {!session && <Link href="/login"><button type="button" className="text-white border border-gray-400 bg-gray-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center mx-3 md:mr-0 dark:bg-gray-500 dark:hover:border-blue-700 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button></Link>}
 
-                                {!localStorage.getItem('authToken') && <Link href="/signup"><button type="button" className="text-white bg-indigo-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center mx-3 md:mr-0 dark:bg-indigo-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign Up</button></Link>}
+                                {!session && <Link href="/signup"><button type="button" className="text-white bg-indigo-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center mx-3 md:mr-0 dark:bg-indigo-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign Up</button></Link>}
 
                             </div>
 
@@ -147,15 +150,15 @@ const Navbar = ({ user, setUser, setKey, showCart, setShowCart, progress, setPro
 
                             {/* acc user  */}
 
-                            {localStorage.getItem('authToken') && <div className="flex flex-col md:flex-row md:mx-1 px-1 z-0">
+                            {session && <div className="flex flex-col md:flex-row md:mx-1 px-1 z-0">
                                 <button type="button" className="flex relative mr-3 text-sm bg-gray-50 rounded-full md:mr-0 " id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" onClick={() => { setDropacc(!dropacc) }}>
                                     <RiAccountCircleFill size={30} className="rounded-full" color='black'/>
                                 </button>
 
                                 <div className={`${(dropacc) ? "" : "hidden"} absolute z-50 mt-11 right-5 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600`} id="user-dropdown" onClickCapture={() => { setDropacc(!dropacc) }}>
                                     <div className="px-4 py-3">
-                                        <span className="block text-sm text-gray-900 dark:text-white">{userName}</span>
-                                        <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">{userEmail.substring(0, 20)}...</span>
+                                        <span className="block text-sm text-gray-900 dark:text-white">{session.user.name}</span>
+                                        <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">{session.user.email}</span>
                                     </div>
                                     <ul className="py-1" aria-labelledby="user-menu-button">
                                         <li>
