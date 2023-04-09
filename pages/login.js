@@ -12,7 +12,6 @@ import { useSession, signIn, signOut, getSession } from 'next-auth/react'
 const Login = ({ setKey, setUser, user }) => {
 
   const { data: session } = useSession()
-  console.log(session);
 
   const UserContext = useContext(userContext)
   const { handleLogin } = UserContext
@@ -25,6 +24,24 @@ const Login = ({ setKey, setUser, user }) => {
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
+  }
+
+  const HANDLELOGIN = async () => {
+    const res = await signIn("google", { callbackUrl: `${process.env.NEXT_PUBLIC_HOST}` })
+    console.log("Success");
+  }
+
+  const HANDLEAUTHLOGIN = async (e) => {
+    e.preventDefault()
+
+    signIn("credentials-login", { ...credentials, callbackUrl: `${process.env.NEXT_PUBLIC_HOST}`, redirect: false })
+      .then(response => {
+        console.log(session)
+      })
+      .catch(error => {
+        console.log("error");
+      })
+
   }
 
   const handleSubmit = async (e) => {
@@ -106,7 +123,7 @@ const Login = ({ setKey, setUser, user }) => {
                     <a className="text-4xl font-bold text-gray-800 transition-colors duration-300 transform dark:text-orange-300 lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300 tracking-widest" href="#">Shoppy.</a>
                   </div>
 
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={HANDLEAUTHLOGIN}>
                     <div className="mb-6">
                       <input
                         id='email'
@@ -178,7 +195,7 @@ const Login = ({ setKey, setUser, user }) => {
                     <li className="w-full px-2">
                       <button
                         className=" ml-2 px-10 border-2 border-opacity-100 flex h-11 items-center justify-center rounded-md bg-slate-50 hover:bg-opacity-90"
-                        onClick={() => signIn("google", { callbackUrl: process.env.NEXTAUTH_URL })}
+                        onClick={HANDLELOGIN}
                       >
                         <Image src={"/google.svg"} width={19} height={19} alt="google"></Image>
                       </button>

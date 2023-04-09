@@ -7,25 +7,14 @@ import { HiOutlineArrowSmRight } from 'react-icons/hi'
 import HeadTitle from '../components/HeadTitle'
 import { getSession, useSession } from 'next-auth/react'
 
-export default function Home({ user}) {
+export default function Home({ user }) {
   const { data: session } = useSession()
-  
   console.log(session)
-
-  const router = useRouter()
-
-  useEffect(() => {
-    if (localStorage.getItem('authToken')) {
-      router.push('/')
-    } else {
-      router.push('/login')
-    }
-  }, [user])
 
 
   return (
     <div >
-      <HeadTitle title={"One Platform for all your needs"}/>
+      <HeadTitle title={"One Platform for all your needs"} />
 
       {/* New Arrivals */}
       <div className="relative mt-1 overflow-hidden bg-white">
@@ -70,7 +59,7 @@ export default function Home({ user}) {
                     </div>
                   </div>
                 </div>
-{/* 
+                {/* 
                 <a href="#" className="inline-block rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-center font-medium text-white hover:bg-indigo-700">Shop Collection</a> */}
               </div>
             </div>
@@ -86,7 +75,7 @@ export default function Home({ user}) {
 
             <h2 className="text-2xl font-bold tracking-tight text-gray-900">Shop By Category</h2>
 
-{/* 
+            {/* 
             <span className="sm:ml-3 flex flex-row justify-center items-center text-indigo-600 font-semibold text-sm hover:cursor-pointer hover:text-indigo-400">
 
               Browse all categories
@@ -207,12 +196,20 @@ export default function Home({ user}) {
 }
 
 
-// export const getServerSideProps = async (context) => {
-//   const session = await getSession(context)
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context)
 
-//   return {
-//     props: {
-//       session
-//     }
-//   }
-// }
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login'
+      }
+    }
+  } else {
+    return {
+      props: {
+        session: session
+      }
+    }
+  }
+}

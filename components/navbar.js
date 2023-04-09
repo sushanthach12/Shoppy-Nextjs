@@ -58,10 +58,8 @@ const Navbar = ({ user, setUser, setKey, showCart, setShowCart, progress, setPro
 
 
     const Logout = async () => {
-        // localStorage.removeItem('authToken')
         setUser({ loggedIn: false, value: "", isAdmin: false })
         signOut()
-        // router.push('/')
     }
 
     const handleRemoveCart = (slug) => {

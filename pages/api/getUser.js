@@ -23,7 +23,7 @@ export default async (req, res) => {
 const getUser = async (req, res) => {
 
     try {
-        const data = await auth(req,res)
+        const data = await auth(req, res)
         const userID = data._id;
 
         const user = await User.findById(userID).select('-password');
