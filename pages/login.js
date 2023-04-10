@@ -35,13 +35,6 @@ const Login = ({ setKey, setUser, user }) => {
     e.preventDefault()
 
     signIn("credentials-login", { ...credentials, callbackUrl: `${process.env.NEXT_PUBLIC_HOST}`, redirect: false })
-      .then(response => {
-        console.log(session)
-      })
-      .catch(error => {
-        console.log("error");
-      })
-
   }
 
   const handleSubmit = async (e) => {

@@ -9,10 +9,22 @@ import { signIn } from "next-auth/react";
 export default NextAuth({
     pages: {
         signIn: '/login',
+        error : '/error'
     },
     providers: [
         CredentialsProvider({
             id: "credentials-login",
+            async authorize(credentials, req) {
+                const user = await User.findOne({ 'email': credentials.email }).select('-password')
+                if (user) {
+                    return user
+                } else {
+                    return null
+                }
+            }
+        }),
+        CredentialsProvider({
+            id: "credentials-signup",
             async authorize(credentials, req) {
                 const user = await User.findOne({ 'email': credentials.email }).select('-password')
                 if (user) {
@@ -53,7 +65,6 @@ export default NextAuth({
             }
             return { ...token, ...user }
         },
-
         async session({ session, token, user }) {
             session.user = token
             return session
@@ -77,7 +88,7 @@ export default NextAuth({
                     body: JSON.stringify({ ...data })
                 })
                 const response = await res.json()
-                this.session.user.accessToken = response.AuthToken
+                message.user.accessToken = response.AuthToken
             }
         }
     }
