@@ -3,7 +3,7 @@ const fs = require('fs/promises')
 
 const nodemailer = require('nodemailer')
 
-export default async (req, res) => {
+export default handler = async (req, res) => {
     switch (req.method) {
         case 'POST':
             await handler(req, res);

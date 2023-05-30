@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer')
 
 import auth from '../../../middleware/authUser'
 
-export default async (req, res) => {
+export default handler = async (req, res) => {
     switch (req.method) {
         case 'POST':
             await handler(req, res);
