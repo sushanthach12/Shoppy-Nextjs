@@ -17,6 +17,7 @@
     "cookies-next": "^2.1.1",
     "crypto": "^1.0.1",
     "crypto-js": "^4.1.1",
+    "emailjs": "^4.0.2",
     "eslint": "8.29.0",
     "eslint-config-next": "^13.2.4",
     "js-cookies": "^1.0.4",
