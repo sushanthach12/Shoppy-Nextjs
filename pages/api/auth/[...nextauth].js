@@ -4,7 +4,6 @@ import GithubProvider from 'next-auth/providers/github'
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from '../../../models/User'
 import SignToken from "../../../lib/siginToken";
-import { signIn } from "next-auth/react";
 
 export default NextAuth({
     pages: {
@@ -59,6 +58,7 @@ export default NextAuth({
 
     callbacks: {
         async jwt({ token, user, account }) {
+        
             if (account) {
                 const TOKEN = await SignToken(user?.email);
                 user.accessToken = TOKEN
